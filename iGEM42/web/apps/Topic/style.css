@@ -1,0 +1,40 @@
+<style>
+div {
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+}
+#wrapper {
+	padding-top:20px;
+	padding-bottom:20px;
+}
+#myChart {
+	margin:auto;
+}
+#Output {
+	margin:20px;
+	padding:10px;
+	border-top:1px solid #BBBBBB;
+	border-bottom:1px solid #BBBBBB;
+}
+#Top {
+	width:100%;
+}
+#Select {
+	display:inline-block;
+	width:30%;
+	height:100%;
+	vertical-align:middle;
+	border:1px solid #BBBBBB;
+	border-radius:3px;
+	padding:10px;
+}
+#Welcome {
+	float:right;
+	width:69%;
+	height:100%;
+	padding:10px;
+	vertical-align:middle;
+	border:1px solid #BBBBBB;
+	border-radius:3px;
+}
+</style>

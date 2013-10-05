@@ -1,0 +1,76 @@
+<style>
+div {
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+}
+#wrapper {
+	padding-top:20px;
+	padding-bottom:20px;
+}
+#myChart {
+	margin:auto;
+}
+#Output {
+	margin:20px;
+	padding:10px;
+	border-top:1px solid #BBBBBB;
+	border-bottom:1px solid #BBBBBB;
+}
+#Top {
+	width:100%;
+}
+#Select {
+	display:inline-block;
+	width:30%;
+	height:100%;
+	vertical-align:middle;
+	border:1px solid #BBBBBB;
+	border-radius:3px;
+	padding:10px;
+}
+#Welcome {
+	float:right;
+	width:69%;
+	height:100%;
+	padding:10px;
+	vertical-align:middle;
+	border:1px solid #BBBBBB;
+	border-radius:3px;
+}
+#FilterLabel, #FilterUl {
+	display:inline-block;
+	vertical-align:middle;
+}
+#FilterLabel {
+	margin:0px;
+	padding:0px;
+	margin-left:10px;
+}
+#FilterUl {
+	list-style:none;
+	position:relative;
+	top:1px;
+	border-top:1px solid #BBBBBB;
+	border-left:1px solid #BBBBBB;
+	border-right:1px solid #BBBBBB;
+	border-radius:3px 3px 0px 0px;
+	margin-left:20px;
+	margin-right:20px;
+	margin-bottom:0px;
+}
+#FilterUl li {
+	float:left;
+	padding:5px;
+	border-right:1px solid #BBBBBB;
+	border-bottom:1px solid #BBBBBB;
+}
+#FilterUl li:nth-last-child(2) {
+	border-style:none;
+}
+#AllFilters {
+	border:1px solid #BBBBBB;
+	border-radius:3px 3px 3px 3px;
+	padding:10px;
+	margin-bottom:10px;
+}
+</style>

@@ -1,0 +1,107 @@
+﻿<html>
+<head>
+<style type="text/css">
+   .navigation {
+      margin-bottom:5%;
+}
+   p  {
+      font-size:14px;
+}
+</style>
+<!-- Javascript -->
+<link rel="stylesheet" href="./css/index.css" type="text/css">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="http://2013.igem.org/Team:Heidelberg/Templates/jqueryjs?action=raw&ctype=text/javascript"></script>
+<script src="http://2013.igem.org/Team:Heidelberg/Templates/bootstrapjs?action=raw&ctype=text/javascript"></script>
+<script src="http://2013.igem.org/Team:Heidelberg/Templates/holderjs?action=raw&ctype=text/javascript"></script>
+<script src="http://2013.igem.org/Team:Heidelberg/Templates/carousel-special-js?action=raw&ctype=text/javascript"></script>
+<script type="text/javascript">
+                $(function() {
+                    //enable scrolling in navbarExample labeled divs
+                    $('div').scrollspy({ target: '#navbarExample' });
+
+                    //Fragment-tab activation
+                    $('#myTab a').click(function (e) {
+                        e.preventDefault()
+                        $('#myTab a[href="#del_h1"]').tab('show')
+                        $('#myTab a[href="#del_ae1"]').tab('show')
+                        $('#myTab a[href="#del_h2"]').tab('show')
+                        $('#myTab a[href="#del_ae2"]').tab('show')
+                    })
+                });
+</script>
+<script>
+	    (function($){
+		$(function(){
+		    $(".carousel-caption").mCustomScrollbar({
+			autoHideScrollbar:true,
+			theme:"dark-thin"
+		    });
+		    $(".scrollContent").mCustomScrollbar({
+			autoHideScrollbar:true,
+			theme:"dark-thin"
+		    });
+		    $("#methods").mCustomScrollbar({
+			autoHideScrollbar:true,
+			theme:"dark-thin"
+		    });
+		 });
+		$("#myCarousel").on("slide.bs.carousel", function(){
+		    setTimeout(function () { $(".carousel-caption:visible").mCustomScrollbar("update"); }, 1000);
+		});
+               $('.nav-tabs a').click(function(){
+		    setTimeout(function () { $(".scrollContent").mCustomScrollbar("update"); }, 1000);
+		})
+	   })(jQuery);
+</script>
+</head>
+<body>
+<div class="navigation">
+                <div>
+                    <a href="http://2013.igem.org/Team:Heidelberg" style="position:absolute; right:0.5%; top:5px"><object data="http://2013.igem.org/wiki/images/2/26/Heidelberg_team_logo_gray.png" height="70"></object><br/><b>Visit our<br/>team wiki</b></a>
+                    <a href="http://2013.igem.org" style="position:absolute; left:0.5%; top:5px"><object data="http://2013.igem.org/wiki/images/1/16/Heidelberg_igem_logo.png" height="70"></object><br/><b>iGEM 2013</b></a>
+                    
+                </div>
+            </div>
+  <div class="container" style="min-width:1000px;">
+            <!--Project Description-->
+            <div style="margin-top:80px">
+                        <h1><span style="font-size:150%;color:#166F57;">iGEM 42.</span><span class="text-muted" style="font-size:90%"> The answer to everything.</span></h1>
+                        <p>Have you ever easily found the piece of information you wanted from past iGEM competitions? Right! That turned out to be very hard.<br/>Maybe you should try this tool which was developed to do exactly this: Lead you directly to the <b>information you want</b>.</p>
+            </div>
+            <div>
+                 <h3>See the <a href="http://2013.igem.org/Team:Heidelberg/HumanPractice/iGEM42">documentation</a> and the <a href="http://2013.igem.org/Team:Heidelberg/Notebook/iGEM42">notebook</a> for this tool on our wiki.<h3>
+            </div>
+            <div class="labjournal-weekly">
+                <div>
+                    <ul class="nav nav-tabs" style="padding-left:5em;">
+                      <li class="active"><a href="#FactsFigures" data-toggle="tab" style="font-size:14px;">Facts & Figures</a></li>
+                      <li><a href="#Topics" data-toggle="tab" style="font-size:14px;">Find Experts by Topics</a></li>
+                      <li><a href="#Method" data-toggle="tab" style="font-size:14px;">Find Experts by Methods</a></li>
+                    </ul>
+                </div>
+                <div class="jumbotron">
+                    <div class="nav navbar scrollContent" data-spy="scroll" data-target="#navbarExample" data-offset="0" style="margin-bottom:0px;">
+
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="FactsFigures">
+                                <iframe style="width:100%; height:700px;" name="igem42-1" frameBorder="0" src="http://igem2013.bioquant.uni-heidelberg.de/shiny/iGEMPulse/homepage/apps/FactsFigures/"></iframe>
+                            </div>
+                            <div class="tab-pane active" id="Topics">
+                                <iframe style="width:100%; height:700px;" name="igem42-2" frameBorder="0" src="http://igem2013.bioquant.uni-heidelberg.de/shiny/iGEMPulse/homepage/apps/Topic/"></iframe>
+                            </div>
+                            <div class="tab-pane active" id="Method">
+                                <iframe style="width:100%; height:700px;" name="igem42-3" frameBorder="0" src="http://igem2013.bioquant.uni-heidelberg.de/shiny/iGEMPulse/homepage/apps/methods/"></iframe>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+  </div>
+
+
+</body>
+</html>

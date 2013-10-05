@@ -9,6 +9,7 @@ Directory structure
 * __sbspks__/: contains the scraping scripts that were used to scrape the SBSPKS database. These require Scrapy 0.16 as well as all packages needed for Django
 * __nrps_designer.sql__: Database dump. Note that all users' passwords and email addresses have been removed and the users have been set to inactive.
 * __nrpsdesigner__: Executable compiled from the C++ code. This was compiled on Debian Wheezy with GCC 4.8.1. You may need to recompile to match your system's library versions.
+* __iGEM42__: The iGEM42 subproject. Refer to readme.md file in that directory.
 
 Django stuff
 =============

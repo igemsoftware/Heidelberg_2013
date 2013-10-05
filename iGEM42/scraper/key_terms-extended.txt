@@ -1,0 +1,357 @@
+synthetic biology
+biological systems
+Escherichia coli
+system biology
+gene expression
+biotechnology
+genetic networks
+metabolic engineering
+biochemical
+genetic circuits
+synthetic genes
+synthetic network
+synthetic systems
+mathematical models
+molecular biology
+regulatory networks
+synthetic genome
+biofuels
+living cell
+gene regulation
+design principles
+synthetic circuit
+biological engineering
+biosynthesis
+synthetic biology approaches
+biologists
+high-throughput
+antibiotics
+protein engineering
+synthetic cells
+emerging field
+oligonucleotides
+recent advances
+small-molecule
+amino acids
+building blocks
+transcription factors
+biomolecular
+nucleic acids
+mammalian cells
+nanotechnology
+biosynthetic
+genetic engineering
+microfluidics
+Saccharomyces cerevisiae
+biological parts
+biomass
+cell-free
+metabolic pathways
+rational design
+self-assembly
+directed evolution
+gene regulatory network
+complex systems
+biosensors
+DNA sequences
+living systems
+potential applications
+signal transduction
+PCR
+large-scale
+living organisms
+synthetic biology applications
+wide range
+biosynthetic pathways
+minimal cells
+natural products
+protein expression
+quorum sensing
+computational design
+DNA synthesis
+logic gates
+wild-type
+biological functions
+biological networks
+gene synthesis
+bottom-up
+model system
+nanoscale
+single-cell
+experimental data
+new tools
+protein design
+signaling pathways
+transcriptional regulation
+transcriptional regulators
+biotransformation
+cellular processes
+complex networks
+positive feedback
+DNA fragments
+new functions
+recent development
+recent years
+synthetic DNA
+bacterial cells
+case study
+engineering approach
+fine-tuning
+large number
+novel functions
+protein synthesis
+artificial cells
+Biological Circuits
+cellular systems
+chemical synthesis
+computational biology
+important role
+biochemical reactions
+bioreactors
+fusion proteins
+high level
+host cell
+minimal genome
+multiple genes
+negative feedback
+practical applications
+recent progress
+regulatory elements
+riboswitch
+RNA-based
+Standard Biological Parts
+steady-state
+biocatalysis
+biological processes
+DNA molecules
+drug discovery
+full-length
+gene therapy
+genetic devices
+genome-scale
+protein production
+regulatory circuits
+single-gene
+BioBricks
+biocatalysts
+biochemical networks
+bioinformatics
+biomolecules
+cell-like
+cost-effective
+engineering principles
+genetic code
+great potential
+metabolic networks
+next generation
+synthetic proteins
+time-delay
+antibiotic resistance
+biofilms
+DNA-binding
+genetic elements
+genome engineering
+life sciences
+long-term
+low-cost
+nanostructures
+protein-DNA
+regulatory systems
+stochastic simulation
+tissue engineering
+two-component
+well-characterized
+Bacillus subtilis
+bacterial genomes
+chemical reactions
+computational approach
+computational modeling
+DNA-based
+functional genomics
+genetic information
+positive feedback loop
+RNA molecules
+semi-synthetic
+site-specific
+synthetic biology aims
+synthetic chemistry
+two-component systems
+whole-cell
+biological components
+biomaterials
+biomedical
+biomimetic
+bioremediation
+cell-based
+chemical biology
+desired behaviors
+drug delivery
+dynamical properties
+genetic oscillator
+genetic regulatory networks
+homologous recombination
+microbial cells
+model-based
+molecular mechanisms
+new field
+new technologies
+one-step
+Ordinary Differential Equations
+powerful tool
+biological molecules
+biomolecular systems
+computer-aided
+design process
+eukaryotic cells
+genetic parts
+genome-wide
+heterologous expression
+high-yield
+membrane proteins
+negative feedback loops
+non-linear
+past decade
+Petri nets
+RNA interference
+self-replicating
+synthetic biology promises
+systems biology approach
+well-defined
+artificial biological systems
+biochemical pathways
+biochemistry
+biophysical
+cell growth
+computer science
+design procedure
+essential genes
+high-quality
+modular design
+origin of life
+precise control
+protein folding
+re-engineering
+recent work
+reverse engineering
+so-called
+taking advantage
+biochemical systems
+biopharmaceutical
+biotechnological applications
+cell populations
+cellular networks
+DNA polymerases
+emerging discipline
+first step
+future applications
+input-output
+major challenge
+minimal set
+nascent field
+population-level
+real-time
+secondary metabolites
+starting point
+synthetic riboswitch
+T7 RNA polymerase
+useful tool
+Watson-Crick
+bioactive
+bioenergy
+bionanotechnology
+constitutive promoter
+desired properties
+DNA nanotechnology
+double-stranded
+engineering microbes
+environmental conditions
+experimental results
+feed-forward
+higher-order
+new insights
+new parts
+next step
+PCR amplification
+recent studies
+single-stranded
+atomic force microscopy
+biodiesel
+bioethics
+biopharmaceutical manufacturing
+biopolymers
+cell membrane
+circadian clock
+current state
+different species
+energy production
+enzyme activity
+genetic material
+high-throughput screening
+host organism
+intellectual property
+michaelis-Menten
+molecular recognition
+non-natural
+numerical simulations
+plant-derived
+present work
+review focuses
+same time
+site-directed
+small number
+state-of-the-art
+three-dimensional
+top-down
+wide variety
+biodegradation
+biofilm formation
+biosafety
+cell-free protein synthesis
+comparative genomics
+control theory
+external stimuli
+few years
+first time
+high-value
+important topic
+individual cells
+infectious diseases
+key role
+major goal
+molecular level
+multicellular organisms
+nanoparticles
+post-transcriptional
+prebiotic
+renewable resources
+self-reproduction
+structure-function
+symbiotic
+tailor-made
+web-based
+well-established
+X-ray
+advanced biofuels
+biological materials
+biosecurity
+biosensing
+ever-increasing
+gene expression noise
+Gram-negative
+human health
+limited number
+methodology/Principal Findings
+microbiology
+minimal number
+model-driven
+modified organisms
+molecular noise
+multi-component
+multiscale models
+nanodevices
+non-standard
+several groups
+significant impact
+time-consuming
+ultimate goal
+cancer

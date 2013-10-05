@@ -1,0 +1,79 @@
+Method
+	Genomics
+		Primer Design
+		Traditional cloning
+		Gibson
+		Restriction Digestion
+		Ligation
+		Sequencing
+		Sanger sequencing
+		Next generation sequencing
+		PCR
+		Microarray
+		Transformation
+		DNA extraction
+		DNA preparation
+		Insert preparation
+		Gel electrophoresis
+		Gel extraction
+		Mutagenesis
+		Bacterial artificial chromosome
+		FISH
+		Genome deletion
+		Northern Blot
+		Southern Blot
+	
+	Proteomics
+		Fusion proteins
+		Protein interaction
+		Western Blot
+		ELISA
+		Immuno assays
+		Coimmunoprecipitation
+		Protein purification
+	
+	Imaging
+		FRET
+		Electron microscopy
+		Fluorescence microscopy
+		Imaging
+	
+	Bioanalytics
+		Interaction chromatography
+		Thin layer chromatography
+		Ion exchange chromatography
+		Chromatography
+		Flow cytometry
+		Cell fractionation
+		Cell counting
+		Southwestern blot
+		Phenotypic analysis
+		Spectroscopy
+		Spectrometry
+	
+	(Bio-)Informatics
+		Computer simulation
+		Computer model
+		Bioinformatics
+		Image processing
+		Neural networks
+	
+	Engineering
+		Assembly line
+		Drug production
+		Encapsulation
+		Kill switch
+		Fermentation
+		Directed delivery
+	
+	Physiology
+		Patch clamp
+		Mouse model
+		Intercellular signaling
+		Intracellular signaling
+	
+	Biophysics, Chemical biology
+		Crystallography
+		NMR
+		Mass spectrometry
+		
