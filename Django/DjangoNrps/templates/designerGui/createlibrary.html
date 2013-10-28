@@ -1,3 +1,4 @@
+{% extends "base.html" %}
 {% load staticfiles %}
 
 {% block js-include %}
@@ -11,7 +12,7 @@
     var animationDuration = 300;
     var structAR = 16 / 9;
     var pid = {{pid}};
-    var processing;
+    var lastretrieved;
 
     function primaryId(aa)
     {
@@ -29,10 +30,10 @@
     {
         var ids = new Array();
         var checked = undefined;
-        var selected = jQuery('#selected_monomers :input[type="checkbox"]');
+        var selected = jQuery('#selected_monomers :button[disabled="disabled"]:not(.addmonomer,.addall)');
         for (var i = 0; i < selected.length; ++i) {
             ids[i] = jQuery(selected[i]).attr("value");
-            if (jQuery(selected[i]).prop("checked"))
+            if (jQuery(selected[i]).parent().parent().find(".active").length)
                 checked = i
         }
         return new Array(ids, checked);
@@ -52,20 +53,12 @@
         jQuery.ajax({type: "POST", url: "{%url 'selectableMonomers' %}", data: {monomer: chosenmonomers[0], selected: chosenmonomers[1], curatedonly: jQuery('#chk_curatedonly').prop("checked"), current: current}, async: false}).done(function(data){monomers = data[1].monomers; monomersList = data[1].monomerslist; spinner.stop(); div.remove();});
     }
 
-    function makeStruct()
-    {
-        if (nrpEnabledEffects){
-            var ids = "?as=" + getMonomers()[0].join("&as=");
-            jQuery('#structimg').attr('src',"{% url 'Structure' %}" + ids);
-        }
-
-    }
     function editMonomer(e)
     {
-        jQuery("#selected_monomers input[type=checkbox]:checked").prop("checked", false).button("refresh");
-        jQuery(e.delegateTarget).prop("checked", true).button("refresh");
+        jQuery("#selected_monomers button.active").removeClass("active");
+        jQuery(e.delegateTarget).addClass("active");
         var select = jQuery("#e23");
-        if (select.data("currMonomer").id != e.delegateTarget.id)
+        if (jQuery(select.data("currMonomer")).parent().parent().attr("id") != jQuery(e.delegateTarget).parent().parent().attr("id"))
             getSelectableMonomers(true);
         select.select2("val", jQuery(e.delegateTarget).data("selectid"));
         select.data("currMonomer", e.delegateTarget);
@@ -136,14 +129,13 @@
         //clickable button should show if L- or D- except for glycine
         if ('nid' in data) {
             btn.attr("value", data.nid);
-            btn.button("option", "label", data.text);
+            btn.html(data.text);
         } else {
-            btn.button("option", "label", prefix + data.text);
+            btn.html(prefix + data.text);
         }
         btn.data("selectid", data.id);
 
         jQuery("#monomer_chirality").buttonset("option", "disabled", 'nid' in data || 'lid' in data ^ 'did' in data);
-        makeStruct();
         refreshModificationList();
     }
 
@@ -165,49 +157,84 @@
     function removeMonomer(e)
     {
         var monomer = jQuery(e.delegateTarget).parent();
+        var monomers = monomer.parent();
         if (nrpEnabledEffects) {
-        monomer.animate({width:0, opacity: 0}, animationDuration, function() {
+        monomer.animate({height:0, opacity: 0}, animationDuration, function() {
                 monomer.remove();
-                makeStruct();
-                var selected = jQuery('#selected_monomers :input[type="checkbox"]');
-                if (selected.find(':checked').length == 0)
-                    jQuery(selected[selected.length - 1]).click();
+                if (monomers.children().length == 1)
+                    monomers.parent().find(".addmonomer").prop("disabled", false);
+                jQuery("#struct").height(jQuery("#params").height());
             });
         } else {
             monomer.remove();
-            var selected = jQuery('#selected_monomers :input[type="checkbox"]');
-            if (selected.find(':checked').length == 0)
-                jQuery(selected[selected.length - 1]).click();
+            if (monomers.children().length == 1)
+                monomers.parent().find(".addmonomer").prop("disabled", false);
+            jQuery("#struct").height(jQuery("#params").height());
         }
-
     }
     function addMonomer(e)
     {
-        if (!processing)
-            getSelectableMonomers(false);
+        var toappend = jQuery(e.delegateTarget).parent().parent();
+        toappend.parent().find(".active").removeClass("active");
+        toappend.parent().find(".addmonomer").prop("disabled", true);
+        jQuery(e.delegateTarget).prop("disabled", false).next().next().addClass("active");
+        if (toappend.attr("id") != lastretrieved) {
+            getSelectableMonomers(true);
+            lastretrieved = toappend.attr("id");
+        }
+        jQuery(e.delegateTarget).next().removeClass("active");
         var dflt = monomersList[0];
-        var close = jQuery("<button>", {html: 'delete'});
-        var id =  new Date().getTime();
-        var aa = jQuery('<input type="checkbox" value="' + primaryId(dflt) + '" id="' + id + '"/>');
-        var label = jQuery('<label for="' + id + '" style="margin-bottom:0px"/>'); //margin: conflict with bootstrap
+        var close = jQuery('<button class="btn removemonomer"><i class="icon-remove"></i></button>');
+        var aa = jQuery('<button class="btn" value="' + primaryId(dflt) + '">' + dflt['text'] + '</button>');
         aa.data("selectid", dflt.id);
         aa.data("modId", "");
-        var div = jQuery('<div>').css("display", "inline-block").css("vertical-align", "bottom").append(close).append(aa).append(label);
-        close.button({icons: {primary: "ui-icon-close"}, text: false}).click(removeMonomer);
-        aa.button({label: dflt['text']}).click(editMonomer);
-        div.buttonset();
+        aa.click(editMonomer);
+        var div = jQuery('<div class="btn-group" style="display:block;margin-left:0;margin-top:5px;">').append(close).append(aa);
         div.hide();
-        var selected = jQuery("#selected_monomers");
+        close.click(removeMonomer);
         jQuery("#e23").data("currMonomer", aa[0]);
-        selected.append(div);
+        toappend.append(div);
         div.fadeIn(animationDuration);
-        if (nrpEnabledEffects) {
-            selected.animate({scrollLeft: selected[0].scrollWidth}, animationDuration);
-        }
         aa.click();
         jQuery("#struct").height(jQuery("#params").height());
         applyMonomer();
         return aa;
+    }
+    function addAllMonomers(e)
+    {
+        var source = jQuery(e.delegateTarget);
+        var selected = source.parent().parent().parent();
+        var selectedmonomers = selected.children();
+        if (!source.hasClass("active")) {
+            selected.find(".active").removeClass("active");
+            selected.find(".addmonomer").prop("disabled", true);
+            selected.find(".addall").prop("disabled", true);
+            source.prop("disabled", false).addClass("active");
+            for (var i = 0; i < selectedmonomers.length; ++i) {
+                var children = jQuery(selectedmonomers[i]).children();
+                if (children.length > 1) {
+                    children.slice(1).find("button").prop("disabled", true);
+                }
+            }
+        } else {
+            source.removeClass("active");
+            selected.find(".addall").prop("disabled", false);
+            var addbtns = selected.find(".addmonomer");
+            var pos = -1;
+            for (var i = 0; i < selectedmonomers.length; ++i) {
+                var children = jQuery(selectedmonomers[i]).children();
+                if (children.length > 1) {
+                    children.slice(1).find("button").prop("disabled", false);
+                    pos = i;
+                    break;
+                }
+            }
+            if (pos != -1) {
+                addbtns.prop("disabled", true);
+                jQuery(addbtns[i]).prop("disabled", false);
+            } else
+                addbtns.prop("disabled", false);
+        }
     }
     function formatAA(aminoAcid) {
         // if (!aminoAcid.id) return aminoAcid.text; // optgroup
@@ -221,49 +248,30 @@
         return kek;
     }
 
-    function submit(e)
+    function collectMonomers()
     {
-        jQuery.post("{% url 'submitNRP' %}", {as: getMonomers()[0]}, undefined, "text").done(function(data){alert(data);}).fail(function(){alert("failed");});
-    }
-
-    function makeConstruct(){
-       jQuery("#tabs").tabs("disable",1);
-       jQuery("#tabs").tabs("disable",2);
-       jQuery("#tabs").tabs("disable",3);
-       jQuery("#primerTab").attr("href", "");
-       jQuery("#constructTab").attr("href", "");
-       submitCeleryJob("{% url 'makeConstruct' pid %}", {curatedonly: jQuery('#chk_curatedonly').prop("checked")}, undefined, undefined, function(data){
-            if (data[1].constructId != undefined)
-                activateTabs(data);
-            else
-                jQuery.post("{% url 'getConstruct' pid %}").done(activateTabs);
-        });
-    }
-
-    function activateTabs(data){
-        data = data[1]
-        console.log(data);
-        constructId =  data["constructId"];
-        if (constructId != 0) {
-       jQuery("#primerTab").attr("href", data["primerTabLink"]);
-       jQuery("#constructTab").attr("href", data["designTabLink"]);
-       jQuery("#tabs").tabs("enable",1);
-       jQuery("#tabs").tabs("enable",2);
-       jQuery("#tabs").tabs("enable",3);
-       jQuery("#tabs").tabs("option", "active", 1);
-        } else {
-            alert("ERROR");
+        var monomers = new Array();
+        var selected = jQuery('#selected_monomers').children();
+        var useall = selected.find(".addall.active");
+        for (var i = 0; i < selected.length; ++i) {
+            var current = jQuery(selected[i]).children();
+            monomers[i] = new Array();
+            monomers[i][0] = parseInt(jQuery(jQuery(current[0]).children()[2]).attr("value"));
+            if (useall.length > 0 && jQuery(current[0]).children()[1] == useall[0]) {
+                monomers[i][1] = true;
+            } else if (useall.length == 0) {
+                for (var j = 1; j < current.length; ++j)
+                    monomers[i][j] = parseInt(jQuery(jQuery(current[j]).children()[1]).attr("value"));
+            }
         }
-        if (typeof g_designer != 'undefined')
-            g_designer.update();
+        return monomers;
     }
-
 
     function save(e)
     {
-        jQuery.post("{% url 'saveNrpMonomers' pid %}", {as: getMonomers()[0], indtag: jQuery('#chk_indigoidinetag').prop("checked")}, makeConstruct, "text").fail(function(){alert("failed");});
+        var monomers = collectMonomers();
+        submitCeleryJob("{% url 'processLibrary' pid %}", JSON.stringify({as: monomers, curatedonly: jQuery('#chk_curatedonly').prop("checked")}), undefined, undefined, function() {window.location.href = "{% url 'viewLibrary' pid %}";});
     }
-
 
     jQuery(function() {
         var zoomMin = .1;
@@ -284,10 +292,8 @@
             escapeMarkup: function(m) { return m; }
             }).change(function(e){applyMonomerChild(e);});
         jQuery("#monomer_chirality").buttonset().change(applyMonomer);
-        jQuery("#monomer_add").button().click(addMonomer).click();
-        //jQuery("#save").button().click(save).parent().buttonset();
         jQuery("#submit").button().click(save).parent().buttonset();
-        jQuery("#chk_curatedonly").click(function() {getSelectableMonomers(true);}).parent().buttonset();
+        jQuery("#chk_curatedonly").parent().buttonset();
         jQuery("#structimg").panzoom({minScale:zoomMin, maxScale:zoomMax, contain: true});
         jQuery("#structzoom").slider({min:zoomMin, max:zoomMax, step:zoomStep, animation: "fast", orientation: "vertical", value: 1, slide: function(event, ui){jQuery("#structimg").panzoom("option", "contain", ui.value > 1 ? "invert" : true).panzoom("zoom", ui.value);}});
         jQuery("#structimg").load(function(e){
@@ -295,45 +301,13 @@
             structimg.data("__pz__")._buildContain(); // update panzoom dimensions
         });
 
-        {% if substrateOrder %}
-        jQuery('[title="delete"]').click();
-        processing = true;
-        {% for monomer in substrateOrder|dictsort:"order" %}
-        addMonomer();
-        {% if monomer.substrate.hasParent %}
-        tmpId = {{monomer.substrate.parent.pk}};
-        selectId = monomersList.filter(function(value) {return 'lid' in value && value.lid == tmpId || 'did' in value && value.did == tmpId;})[0];
-        jQuery('#e23').select2("val", selectId.id, triggerChange = true);
-        if ('lid' in selectId && tmpId == selectId.lid) {
-                jQuery("#monomer_chirality_L").click();
-        } else {
-                jQuery("#monomer_chirality_D").click();
-
-        }
-
-        refreshModificationList();
-        tmpId = {{monomer.substrate.pk}};
-        jQuery('#e11').select2("val", tmpId, triggerChange=true);
-        {% else %}
-        tmpId = {{monomer.substrate.pk}};
-        selectId = monomersList.filter(function(value) {return value.lid == tmpId || value.did == tmpId;})[0];
-        jQuery('#e23').select2("val", selectId.id, triggerChange = true);
-        if ('lid' in selectId && tmpId == selectId.lid) {
-                jQuery("#monomer_chirality_L").click();
-        } else {
-                jQuery("#monomer_chirality_D").click();
-
-        }
-
-        {% endif %}
-        {% endfor %}
-        {% endif %}
-        processing = false;
-        getSelectableMonomers(true);
         nrpEnabledEffects = true;
-        makeStruct();
-
-        });
+        jQuery(".addmonomer").click(addMonomer);
+        jQuery(".addall").click(addAllMonomers);
+    });
+    jQuery(window).load(function(){
+        jQuery("#struct").height(jQuery("#params").height());
+    });
 
 </script>
 {% endblock %}
@@ -341,26 +315,26 @@
 {% block css-include %}
 <style class="text/css">
 
-	.box
-	{
-		padding:10px;
-		border:1px solid gray;
-		margin:0px;
-		border-top-left-radius: 10px;
-		border-top-right-radius: 10px;
-		border-bottom-left-radius: 10px;
-		border-bottom-right-radius: 10px;
-	}
+    .box
+    {
+        padding:10px;
+        border:1px solid gray;
+        margin:0px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
 
-	.box:nth-of-type(2)
+    .box:nth-of-type(2)
     {
         margin-top: 10px;
     }
 
-	.pop-up_box1
-	.pop-up_box2
-	.pop-up_box3
-	{
+    .pop-up_box1
+    .pop-up_box2
+    .pop-up_box3
+    {
         background-clip: padding-box;
         background-color: #E4E4E4;
         background-image: -moz-linear-gradient(center top , #F4F4F4 20%, #F0F0F0 50%, #E8E8E8 52%, #EEEEEE 100%);
@@ -373,11 +347,11 @@
         margin: 3px 0 3px 5px;
         padding: 3px 5px 3px 18px;
         position: relative;
-	}
+    }
 
-	.pop-up_box1
-	.pop-up_box2
-	{
+    .pop-up_box1
+    .pop-up_box2
+    {
         float: left;
         list-style: none outside none;
     }
@@ -391,22 +365,15 @@
 </style>
 {% endblock %}
 {% block content %}
-<h2>Welcome to the NRPS Designer Software by the iGEM Team Heidelberg 2013
-</h2>
-<div style="text-align:center" class="span12">
-        <a class="btn" onclick="introJs().start();"><i class="icon icon-info-sign"></i> Lead me around</a>
-    </div>
-
 <div class="row-fluid">
 <div class="span8" id="params" >
-    <div class="box" data-intro="In this step you can select whether you want to attach a Indigoidine tag to your final NRP and if you want all domains used to be curated rather than domains entered by any user." data-step="2">
+    <div class="box">
         <p>Options:</p>
         <div>
             <input type="checkbox" id="chk_curatedonly" checked="checked"/><label for="chk_curatedonly" style="margin-bottom:0">Use curated domains only</label>
-            <input type="checkbox" id="chk_indigoidinetag"{% if indigoidineTagged %} checked="checked"{% endif %}/><label for="chk_indigoidinetag" style="margin-bottom:0" data-step="3" data-intro="Check this if the peptide needs to be tagged with the blue pigment Indigoidine.">Tag NRP with Indigoidine</label>
         </div>
     </div>
-    <div class="box" data-intro="In this box you can choose the amino acid of your choice in L or D-form, if available. Press 'Add Monomer' in order to extend the peptide chain by 1 amino acid. Once you are done and you want to get your predicted domains, just press on 'Design Construct' " data-step="4">
+    <div class="box">
         <p> Please choose amino acids you want to integrate into your peptide! </p>
         <input type="hidden" id="e23" style="width:100%"/>
         <div id="monomer_chirality">
@@ -421,16 +388,25 @@
             <div id="e11" style="width:100%"></div>
         </div>
 
-        <div id="selected_monomers" style="white-space:nowrap;overflow:auto;margin-top:5px;margin-bottom:5px;padding-top:5px;padding-bottom:5px;"></div>
+        <div id="selected_monomers" style="white-space:nowrap;overflow:auto;margin-top:5px;margin-bottom:5px;padding-top:5px;padding-bottom:5px;">
+            {% for monomer in scaffold %}
+                <div style="display:inline-block;vertical-align:top" id="selected_position_{{ forloop.counter }}">
+                    <div class="btn-group" style="display:block">
+                        <button class="btn addmonomer"><i class="icon-plus"></i></button>
+                        <button class="btn addall" title="Use all possible monomers"><i class="icon-ok"></i></button>
+                        <button class="btn" disabled="disabled" value="{{ monomer.id }}">{{ monomer.name }}</button>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
         <div>
-            <button id="monomer_add">Add monomer</button>
-            <button id="submit">Design construct</button>
+            <button id="submit">Design library</button>
         </div>
     </div>
 </div>
 
 <div class="span4" id="struct">
-    <div class="box" style="height:100%;-moz-box-sizing:border-box;box-sizing:border-box;" data-intro="This box contains a visual representation of the peptide you are about to design a synthetic NRPS for." data-step="5">
+    <div class="box" style="height:100%;-moz-box-sizing:border-box;box-sizing:border-box;">
             <div id="structzoom" style="float:left;height:100%;"></div>
             <div style="height:100%;text-align:center;">
                 <img id="structimg" alt="" src = "{% url 'Structure' %}{{initialPic}}" style="height:100%;">
